@@ -4,15 +4,20 @@
       <div>
         <div class="title">当前城市</div>
         <div class="button-list">
-          <div class="button-wrapper">
-            <div class="button">杭州</div>
-          </div>
+          <router-link class="button-wrapper" tag="div" to="/">
+            <div class="button">{{this.city}}</div>
+          </router-link>
         </div>
       </div>
       <div>
         <div class="title">热门城市</div>
         <div class="button-list">
-          <div class="button-wrapper" v-for="item of hotCities" :key="item.id">
+          <div
+            class="button-wrapper"
+            v-for="item of hotCities"
+            :key="item.id"
+            @click="handleClick(item.name)"
+          >
             <div class="button">{{item.name}}</div>
           </div>
         </div>
@@ -20,7 +25,12 @@
       <div class="alpha-arae" v-for="(value,key) of cities" :key="key" :ref="key">
         <div class="title">{{key}}</div>
         <div class="items">
-          <div class="item border-bottom" v-for="(item,index) of value" :key="index">{{item.name}}</div>
+          <div
+            class="item border-bottom"
+            v-for="(item,index) of value"
+            :key="index"
+            @click="handleClick(item.name)"
+          >{{item.name}}</div>
         </div>
       </div>
     </div>
@@ -29,6 +39,7 @@
 <script>
 import Bus from '@/common/EventBus.js'
 import BScroll from 'better-scroll'
+import { mapState, mapActions, mapGetters } from 'vuex'
 export default {
   name: 'CityList',
   props: {
@@ -39,6 +50,17 @@ export default {
     return {
       letter: ''
     }
+  },
+  computed: {
+    ...mapState(['city']),
+    ...mapGetters(['doubleCity'])
+  },
+  methods: {
+    handleClick (city) {
+      this.$router.push('/')
+      this.changeCity(city)
+    },
+    ...mapActions(['changeCity'])
   },
   watch: {
     letter () {

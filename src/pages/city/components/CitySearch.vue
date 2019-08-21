@@ -5,7 +5,12 @@
     </div>
     <div class="wrapper" ref="wrapper" v-show="this.value">
       <div class="content">
-        <div class="item border-bottom" v-for="(item,index) of list" :key="index">{{item.name}}</div>
+        <div
+          class="item border-bottom"
+          v-for="(item,index) of list"
+          :key="index"
+          @click="handleClick(item.name)"
+        >{{item.name}}</div>
         <div class="item border-bottom" v-show="!hasData">没有找到城市名，请输入有效的城市名</div>
       </div>
     </div>
@@ -23,6 +28,12 @@ export default {
       value: '',
       list: [],
       timer: null
+    }
+  },
+  methods: {
+    handleClick (city) {
+      this.$router.push('/')
+      this.$store.dispatch('changeCity', city)
     }
   },
   computed: {
@@ -76,6 +87,11 @@ export default {
     line-height: 0.62rem;
     color: #666;
     font-size: 0.32rem;
+    box-sizing: border-box;
+    padding: 0 0.2rem;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 }
 .wrapper {

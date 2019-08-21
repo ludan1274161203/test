@@ -9,7 +9,9 @@
         <div class="item-right">
           <div>{{item.title}}</div>
           <div class="item-desc">{{item.desc}}</div>
-          <button class="btn-class">查看详情</button>
+          <router-link to="/detail">
+            <button class="btn-class">查看详情</button>
+          </router-link>
         </div>
       </div>
     </div>

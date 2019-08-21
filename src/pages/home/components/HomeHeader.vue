@@ -3,19 +3,25 @@
     <div class="header-left">
       <span class="icon-back iconfont">&#xe682;</span>
     </div>
-    <div class="header-input">
-      <span class="icon-search iconfont">&#xe607;</span>
-      输入城市/景点/游玩主题
-    </div>
+    <div class="header-input iconfont" contenteditable="true" :data-placeholder="content"></div>
     <router-link to="/city" class="header-right">
-      杭州
+      {{this.city}}
       <span class="icon-down iconfont">&#xe65a;</span>
     </router-link>
   </div>
 </template>
 <script>
+import { mapState } from 'vuex'
 export default {
-  name: 'HomeHeader'
+  name: 'HomeHeader',
+  data () {
+    return {
+      content: '\ue607 输入城市/景点/游玩主题'
+    }
+  },
+  computed: {
+    ...mapState(['city'])
+  }
 }
 </script>
 <style lang="scss" scoped>
@@ -50,6 +56,9 @@ export default {
     border-radius: 0.08rem;
     font-size: 0.28rem;
     color: #ccc;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
     .icon-search {
       position: relative;
       left: 0.1rem;
@@ -58,11 +67,18 @@ export default {
       margin-left: -0.1rem;
     }
   }
+  .header-input:empty:before {
+    content: attr(data-placeholder);
+    color: #ccc;
+  }
+  .header-input:focus:before {
+    content: none;
+  }
   .header-right {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 1.04rem;
+    min-width: 1.04rem;
     padding: 0.1rem 0.1rem;
     color: #fff;
     font-size: 0.32rem;
